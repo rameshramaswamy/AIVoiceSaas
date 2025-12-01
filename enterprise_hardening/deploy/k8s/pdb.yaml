@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: voice-engine-pdb
+spec:
+  minAvailable: 60% # Never kill more than 40% of pods at once
+  selector:
+    matchLabels:
+      app: voice-stream-engine

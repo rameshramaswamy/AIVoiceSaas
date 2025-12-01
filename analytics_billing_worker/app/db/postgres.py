@@ -1,0 +1,16 @@
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from app.core.config import settings
+
+# Shared Database Connection (Same DB as SaaS Backend)
+engine = create_async_engine(settings.DATABASE_URI, echo=False)
+
+AsyncSessionLocal = sessionmaker(
+    engine, 
+    class_=AsyncSession, 
+    expire_on_commit=False
+)
+
+async def get_db_session():
+    async with AsyncSessionLocal() as session:
+        yield session
